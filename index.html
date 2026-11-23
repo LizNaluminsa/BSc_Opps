@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department of Physics — Opportunities & Careers Board | Makerere University</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Merriweather for academic gravitas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        navy: {
+                            800: '#102a43',
+                            900: '#0a192f',
+                            950: '#06101f',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#d97706',
+                            600: '#b45309',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for clean academic aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.75; }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Top Academic Banner / Header -->
+    <header class="bg-navy-900 text-white border-b-4 border-gold-500 shadow-lg sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <!-- Branding & Title -->
+                <div class="flex items-start sm:items-center gap-3.5">
+                    <div class="bg-gold-500/10 border border-gold-500/40 p-2.5 rounded-xl shrink-0 text-gold-400">
+                        <!-- Atom / Physics SVG Emblem -->
+                        <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(30 12 12)"/>
+                            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(90 12 12)"/>
+                            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(150 12 12)"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-gold-400">
+                            <span>Makerere University</span>
+                            <span>•</span>
+                            <span>College of Natural Sciences (CoNAS)</span>
+                        </div>
+                        <h1 class="font-serif text-lg sm:text-2xl font-bold text-white tracking-tight mt-0.5">
+                            Department of Physics — Opportunities & Careers Board
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Lecturer Admin Toggle & Controls -->
+                <div class="flex flex-wrap items-center gap-2 self-start md:self-center">
+                    <button id="adminToggleBtn" onclick="handleAdminButtonClick()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all border border-slate-700 bg-navy-800 hover:bg-slate-800 text-slate-200 shadow-sm">
+                        <i data-lucide="lock" id="adminLockIcon" class="w-4 h-4 text-gold-400"></i>
+                        <span id="adminBtnText">Lecturer Admin</span>
+                    </button>
+
+                    <!-- Admin Quick Action Bar (Hidden unless authenticated) -->
+                    <div id="adminControls" class="hidden flex flex-wrap items-center gap-2">
+                        <button onclick="openPostModal()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-gold-500 hover:bg-gold-600 text-navy-950 shadow-sm transition-all">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Post Opportunity</span>
+                        </button>
+                        <button onclick="openDataModal()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 transition-all" title="Export or Import JSON for static hosting">
+                            <i data-lucide="database" class="w-4 h-4 text-sky-400"></i>
+                            <span class="hidden sm:inline">Data / Export</span>
+                        </button>
+                        <button onclick="logoutAdmin()" class="inline-flex items-center gap-1 px-2.5 py-2 rounded-lg text-xs font-medium bg-red-950/60 hover:bg-red-900/80 text-red-200 border border-red-800/60 transition-all" title="Exit Admin Mode">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub-header / Notice Banner -->
+    <div class="bg-slate-900 text-slate-300 text-xs sm:text-sm border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <p class="flex items-center gap-2">
+                <i data-lucide="info" class="w-4 h-4 text-gold-400 shrink-0"></i>
+                <span>Curated scholarships, graduate fellowships, research placements, and industrial attachments for current students & alumni.</span>
+            </p>
+            <div class="flex items-center gap-3 text-xs text-slate-400 shrink-0">
+                <span id="statsCounter" class="font-medium text-slate-200">Loading opportunities...</span>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer select-none">
+                    <input type="checkbox" id="hideClosedCheckbox" onchange="renderOpportunities()" class="rounded border-slate-600 bg-slate-800 text-gold-500 focus:ring-gold-500">
+                    <span>Hide Closed</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        
+        <!-- Search & Filter Controls -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-5 mb-6">
+            <div class="flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center">
+                
+                <!-- Category Filter Tabs -->
+                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 lg:pb-0" id="categoryTabs">
+                    <button onclick="setCategory('All')" data-category="All" class="cat-tab active px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all bg-navy-900 text-white shadow-sm">
+                        All Opportunities
+                    </button>
+                    <button onclick="setCategory('Graduate Programs & Scholarships')" data-category="Graduate Programs & Scholarships" class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">
+                        Graduate Programs & Scholarships
+                    </button>
+                    <button onclick="setCategory('Internships & Attachments')" data-category="Internships & Attachments" class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">
+                        Internships & Attachments
+                    </button>
+                    <button onclick="setCategory('Research & Fellowships')" data-category="Research & Fellowships" class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">
+                        Research & Fellowships
+                    </button>
+                    <button onclick="setCategory('Conferences & Workshops')" data-category="Conferences & Workshops" class="cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">
+                        Conferences & Workshops
+                    </button>
+                </div>
+
+                <!-- Search & Eligibility Filter -->
+                <div class="flex flex-col sm:flex-row gap-2.5 shrink-0">
+                    <div class="relative flex-grow sm:w-64">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" id="searchInput" oninput="renderOpportunities()" placeholder="Search title, institution, keyword..." class="w-full pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy-800 focus:bg-white transition-all">
+                        <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <select id="eligibilityFilter" onchange="renderOpportunities()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-navy-800">
+                        <option value="All">All Eligibility</option>
+                        <option value="BSc Physics">BSc Physics</option>
+                        <option value="BSED">BSED (Education)</option>
+                        <option value="MSc">MSc Physics</option>
+                        <option value="Alumni">Alumni / Graduates</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shared / Highlighted Opportunity Banner (shown when arriving via ?opp=ID link) -->
+        <div id="sharedHighlightBanner" class="hidden mb-6 bg-amber-50 border border-amber-300 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-amber-100 text-amber-800 rounded-xl">
+                    <i data-lucide="bookmark-check" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-amber-950">Viewing Shared Opportunity</p>
+                    <p class="text-xs text-amber-800">You opened a direct link to a specific posting. Click "Show All" to browse the full board.</p>
+                </div>
+            </div>
+            <button onclick="clearSharedFilter()" class="px-3.5 py-1.5 bg-amber-800 hover:bg-amber-900 text-white text-xs font-semibold rounded-lg transition-colors shrink-0">
+                Show All Opportunities
+            </button>
+        </div>
+
+        <!-- Opportunities Grid -->
+        <div id="opportunitiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards injected dynamically by JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden bg-white rounded-2xl border border-slate-200 p-12 text-center max-w-lg mx-auto my-8">
+            <div class="w-14 h-14 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="folder-search" class="w-7 h-7"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800 mb-1">No matching opportunities found</h3>
+            <p class="text-sm text-slate-500 mb-5">Try adjusting your search keywords, category filter, or unchecking "Hide Closed".</p>
+            <button onclick="resetAllFilters()" class="px-4 py-2 bg-navy-900 hover:bg-navy-800 text-white text-sm font-medium rounded-xl transition-colors">
+                Reset All Filters
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div>
+                <p class="font-semibold text-slate-700">Department of Physics, Makerere University</p>
+                <p class="mt-0.5">P.O. Box 7062, Kampala, Uganda • Academic & Career Advisory Noticeboard</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="openDataModal()" class="text-slate-600 hover:text-navy-900 underline underline-offset-2">JSON Feed / Static Export</button>
+                <span>•</span>
+                <button onclick="resetToSampleData()" class="text-slate-500 hover:text-red-600 transition-colors">Restore Sample Posts</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =====================================================================
+         MODAL 1: ADMIN PIN AUTHENTICATION & SETTINGS
+    ====================================================================== -->
+    <div id="pinModal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden">
+            <div class="bg-navy-900 px-6 py-4 flex items-center justify-between text-white">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-gold-400"></i>
+                    <h3 class="font-bold text-base">Lecturer Admin Authentication</h3>
+                </div>
+                <button onclick="closePinModal()" class="text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <form onsubmit="verifyAdminPin(event)" class="p-6">
+                <p class="text-sm text-slate-600 mb-4">
+                    Enter your Lecturer Admin PIN to add, edit, delete, or export opportunities.
+                </p>
+                <div class="mb-4">
+                    <label for="pinInput" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Admin PIN</label>
+                    <input type="password" id="pinInput" maxlength="12" required placeholder="Enter PIN (Default: 1922)" class="w-full px-4 py-2.5 border border-slate-300 rounded-xl text-base tracking-widest focus:outline-none focus:ring-2 focus:ring-navy-800">
+                    <p id="pinErrorMsg" class="hidden text-xs text-red-600 font-medium mt-1.5">Incorrect PIN. Default Makerere founding year PIN is 1922.</p>
+                </div>
+                <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3 mb-5 text-xs text-slate-500 flex items-start gap-2">
+                    <i data-lucide="key-round" class="w-4 h-4 text-slate-400 shrink-0 mt-0.5"></i>
+                    <span>Tip: Default PIN is <strong class="text-slate-700">1922</strong>. Once logged in, you can customize your PIN inside the Data & Settings panel.</span>
+                </div>
+                <div class="flex justify-end gap-2.5">
+                    <button type="button" onclick="closePinModal()" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl text-sm font-semibold bg-navy-900 hover:bg-navy-800 text-white shadow-sm">Unlock Admin Mode</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 2: POST / EDIT OPPORTUNITY FORM
+    ====================================================================== -->
+    <div id="postModal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden my-8">
+            <div class="bg-navy-900 px-6 py-4 flex items-center justify-between text-white border-b-2 border-gold-500">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="file-plus-2" class="w-5 h-5 text-gold-400"></i>
+                    <h3 id="postModalTitle" class="font-bold text-base sm:text-lg">Post New Opportunity</h3>
+                </div>
+                <button onclick="closePostModal()" class="text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="opportunityForm" onsubmit="saveOpportunity(event)" class="p-6 space-y-4 max-h-[82vh] overflow-y-auto">
+                <input type="hidden" id="oppId">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Opportunity Title *</label>
+                        <input type="text" id="oppTitle" required placeholder="e.g., ICTP Postgraduate Diploma Programme in Condensed Matter Physics" class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy-800">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Category *</label>
+                        <select id="oppCategory" required class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-navy-800">
+                            <option value="Graduate Programs & Scholarships">Graduate Programs & Scholarships</option>
+                            <option value="Internships & Attachments">Internships & Attachments</option>
+                            <option value="Research & Fellowships">Research & Fellowships</option>
+                            <option value="Conferences & Workshops">Conferences & Workshops</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Application Deadline *</label>
+                        <input type="date" id="oppDeadline" required class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy-800">
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Host Institution / Organization *</label>
+                        <input type="text" id="oppHost" required placeholder="e.g., King Abdullah University of Science and Technology (KAUST), Saudi Arabia" class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy-800">
+                    </div>
+                </div>
+
+                <!-- Eligibility Checkboxes -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Target Eligibility (Select all that apply) *</label>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs font-medium cursor-pointer hover:bg-slate-100">
+                            <input type="checkbox" name="oppEligibility" value="BSc Physics" class="rounded text-navy-900 focus:ring-navy-800">
+                            <span>BSc Physics</span>
+                        </label>
+                        <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs font-medium cursor-pointer hover:bg-slate-100">
+                            <input type="checkbox" name="oppEligibility" value="BSED" class="rounded text-navy-900 focus:ring-navy-800">
+                            <span>BSED (Physics/Math)</span>
+                        </label>
+                        <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs font-medium cursor-pointer hover:bg-slate-100">
+                            <input type="checkbox" name="oppEligibility" value="MSc" class="rounded text-navy-900 focus:ring-navy-800">
+                            <span>MSc Physics</span>
+                        </label>
+                        <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs font-medium cursor-pointer hover:bg-slate-100">
+                            <input type="checkbox" name="oppEligibility" value="Alumni" class="rounded text-navy-900 focus:ring-navy-800">
+                            <span>Alumni / Graduates</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Description & Key Notes *</label>
+                    <textarea id="oppDescription" rows="4" required placeholder="Include funding coverage, research areas, required documents (e.g., transcripts, recommendation letters), or specific advice for Makerere applicants..." class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy-800"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Application / Details URL *</label>
+                    <input type="url" id="oppUrl" required placeholder="https://..." class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy-800">
+                </div>
+
+                <div class="pt-3 border-t border-slate-200 flex justify-end gap-2.5">
+                    <button type="button" onclick="closePostModal()" class="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">Cancel</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-gold-500 hover:bg-gold-600 text-navy-950 shadow-sm flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                        <span>Save & Publish</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 3: JSON EXPORT / IMPORT & ADMIN SETTINGS (Static Hosting Sync)
+    ====================================================================== -->
+    <div id="dataModal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden my-8">
+            <div class="bg-navy-900 px-6 py-4 flex items-center justify-between text-white">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="database" class="w-5 h-5 text-sky-400"></i>
+                    <h3 class="font-bold text-base sm:text-lg">Portable Data Sync (JSON) & Settings</h3>
+                </div>
+                <button onclick="closeDataModal()" class="text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-5 max-h-[82vh] overflow-y-auto">
+                <div class="bg-sky-50 border border-sky-200 rounded-xl p-4 text-xs sm:text-sm text-sky-900">
+                    <p class="font-semibold mb-1">How Static Hosting & Sharing Works:</p>
+                    <p class="text-sky-800 leading-relaxed">
+                        Changes you make are automatically saved in this browser's storage. To publish updates for all students on <strong>GitHub Pages, Netlify, or the Department Website</strong>, copy the JSON below and replace the <code class="bg-sky-100 px-1.5 py-0.5 rounded font-mono text-xs">DEFAULT_OPPORTUNITIES</code> array in <code class="bg-sky-100 px-1.5 py-0.5 rounded font-mono text-xs">index.html</code>, or share the JSON file for import.
+                    </p>
+                </div>
+
+                <!-- Export Section -->
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label class="text-xs font-bold uppercase tracking-wider text-slate-600">Current Opportunities JSON</label>
+                        <div class="flex items-center gap-2">
+                            <button onclick="copyJsonToClipboard()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-navy-900 hover:bg-navy-800 text-white transition-colors">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                <span>Copy JSON</span>
+                            </button>
+                            <button onclick="downloadJsonFile()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 transition-colors">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                <span>Download .json</span>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="jsonExportArea" rows="6" readonly class="w-full p-3 bg-slate-900 text-emerald-400 font-mono text-xs rounded-xl border border-slate-700 focus:outline-none"></textarea>
+                </div>
+
+                <!-- Import Section (Only enabled in Admin Mode) -->
+                <div id="importSection" class="border-t border-slate-200 pt-4">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Import JSON Data (Overwrite Board)</label>
+                    <textarea id="jsonImportArea" rows="3" placeholder="Paste exported JSON array here to restore or update posts..." class="w-full p-3 bg-slate-50 font-mono text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-800 mb-2"></textarea>
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer border border-slate-300">
+                            <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                            <span>Upload .json File</span>
+                            <input type="file" accept=".json" onchange="handleJsonFileUpload(event)" class="hidden">
+                        </label>
+                        <button onclick="importJsonData()" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-gold-500 hover:bg-gold-600 text-navy-950">
+                            Apply Imported JSON
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Change Admin PIN (Only visible when logged in) -->
+                <div id="changePinSection" class="hidden border-t border-slate-200 pt-4">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Customize Lecturer Admin PIN</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="newPinInput" maxlength="12" placeholder="New PIN (min 4 chars)" class="px-3 py-1.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy-800">
+                        <button onclick="updateAdminPin()" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-900 text-white">Update PIN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         CUSTOM CONFIRMATION MODAL (Replaces browser confirm())
+    ====================================================================== -->
+    <div id="confirmModal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full shadow-2xl border border-slate-200 p-6">
+            <div class="flex items-center gap-3 text-red-600 mb-3">
+                <div class="p-2 bg-red-100 rounded-full">
+                    <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                </div>
+                <h3 id="confirmTitle" class="font-bold text-base text-slate-900">Confirm Action</h3>
+            </div>
+            <p id="confirmMessage" class="text-sm text-slate-600 mb-5">Are you sure you want to proceed?</p>
+            <div class="flex justify-end gap-2.5">
+                <button onclick="closeConfirmModal()" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">Cancel</button>
+                <button id="confirmActionBtn" class="px-4 py-2 rounded-xl text-sm font-semibold bg-red-600 hover:bg-red-700 text-white">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         TOAST NOTIFICATION CONTAINER
+    ====================================================================== -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+    <!-- =====================================================================
+         APPLICATION LOGIC
+    ====================================================================== -->
+    <script>
+        /**
+         * Dynamic relative date helper so sample entries always look realistic
+         * regardless of when the lecturer or student opens the board.
+         */
+        function getRelativeDateISO(daysOffset) {
+            const date = new Date();
+            date.setDate(date.getDate() + daysOffset);
+            return date.toISOString().split('T')[0];
+        }
+
+        /**
+         * Pre-populated realistic sample entries tailored for Makerere University
+         * Department of Physics students and alumni.
+         */
+        const DEFAULT_OPPORTUNITIES = [
+            {
+                id: "mak-phys-01",
+                title: "KAUST MSc & PhD Fellowships in Applied Physics & Photonics",
+                category: "Graduate Programs & Scholarships",
+                host: "King Abdullah University of Science and Technology (KAUST), Saudi Arabia",
+                deadline: getRelativeDateISO(11), // Closing soon!
+                eligibility: ["BSc Physics", "MSc", "Alumni"],
+                description: "Full tuition support, generous annual living stipend ($20,000–$30,000), on-campus housing, and relocation coverage. Strong track record of admitting top Makerere Physics graduates into Condensed Matter, Solar Photovoltaics, and Quantum Optics labs. GRE is optional.",
+                url: "https://admissions.kaust.edu.sa/"
+            },
+            {
+                id: "mak-phys-02",
+                title: "CERN Summer Student Programme (Non-Member State Quota)",
+                category: "Internships & Attachments",
+                host: "European Organization for Nuclear Research (CERN), Geneva, Switzerland",
+                deadline: getRelativeDateISO(28),
+                eligibility: ["BSc Physics", "MSc"],
+                description: "8 to 13 weeks working on experimental or theoretical particle physics, detector instrumentation, or scientific computing at CERN. Includes a daily subsistence allowance and travel grant. Open to 3rd-year BSc Physics and MSc students.",
+                url: "https://careers.cern/summer"
+            },
+            {
+                id: "mak-phys-03",
+                title: "East African Astronomical Research Network (EAARN) Visiting Internships",
+                category: "Research & Fellowships",
+                host: "EAARN / Mbarara University & Bishop Stuart Astrophysics Group",
+                deadline: getRelativeDateISO(6), // Closing soon!
+                eligibility: ["BSc Physics", "BSED", "MSc"],
+                description: "Hands-on radio astronomy data reduction, transient sky surveys, and optical telescope instrumentation training. Ideal for final-year undergraduate dissertation projects or MSc students seeking regional mentorship.",
+                url: "https://www.astro4dev.org/"
+            },
+            {
+                id: "mak-phys-04",
+                title: "Industrial Attachment: Grid Telemetry, SCADA & Renewable Energy Systems",
+                category: "Internships & Attachments",
+                host: "Uganda Electricity Transmission Company Ltd (UETCL) & Kiira Motors EV Lab",
+                deadline: getRelativeDateISO(19),
+                eligibility: ["BSc Physics", "BSED"],
+                description: "Recess-term industrial training placements in Kampala and Jinja focusing on high-voltage power transmission diagnostics, solar micro-grid instrumentation, and battery thermal testing. Obtain an official introductory letter from the Head of Department.",
+                url: "https://www.uetcl.go.ug/"
+            },
+            {
+                id: "mak-phys-05",
+                title: "ICTP Postgraduate Diploma Programme in Earth System & Condensed Matter Physics",
+                category: "Graduate Programs & Scholarships",
+                host: "Abdus Salam International Centre for Theoretical Physics (ICTP), Trieste, Italy",
+                deadline: getRelativeDateISO(42),
+                eligibility: ["BSc Physics", "Alumni"],
+                description: "Intensive one-year pre-PhD fellowship designed specifically for talented graduates from developing countries. Covers travel, visa, medical insurance, and monthly stipend. Graduates frequently transition directly into European or North American PhD programs.",
+                url: "https://www.ictp.it/opportunity/ictp-postgraduate-diploma-programme"
+            },
+            {
+                id: "mak-phys-06",
+                title: "African School of Fundamental Physics and Applications (ASP)",
+                category: "Conferences & Workshops",
+                host: "ASP Organizing Committee / Partner African Host University",
+                deadline: getRelativeDateISO(34),
+                eligibility: ["BSc Physics", "BSED", "MSc", "Alumni"],
+                description: "Three-week intensive workshop covering nuclear and particle physics, astrophysics, accelerator technologies, and high-performance computing. Full bursaries covering flights and accommodation are awarded to selected East African applicants.",
+                url: "https://www.africanschoolofphysics.org/"
+            },
+            {
+                id: "mak-phys-07",
+                title: "Medical Physics & Radiation Protection Clinical Trainee Attachment",
+                category: "Internships & Attachments",
+                host: "Uganda Cancer Institute (UCI) & Atomic Energy Council (AEC), Kampala",
+                deadline: getRelativeDateISO(-5), // Closed example
+                eligibility: ["BSc Physics", "MSc", "Alumni"],
+                description: "Clinical dosimetry, linear accelerator quality assurance, and radiation safety monitoring attachment in Mulago/Kampala. Suitable for students interested in pursuing MSc Medical Physics.",
+                url: "https://www.atomiccouncil.go.ug/"
+            }
+        ];
+
+        // Storage Keys
+        const STORAGE_KEY_OPPS = "mak_physics_opportunities_v1";
+        const STORAGE_KEY_PIN = "mak_physics_admin_pin_v1";
+        const DEFAULT_PIN = "1922"; // Makerere University founding year
+
+        // State Variables
+        let opportunities = [];
+        let activeCategory = "All";
+        let sharedOppId = null;
+        let isAdminAuthenticated = false;
+        let pendingConfirmCallback = null;
+
+        /**
+         * Initialize Application on Load
+         */
+        window.addEventListener("DOMContentLoaded", () => {
+            loadOpportunitiesFromStorage();
+            checkUrlQueryParams();
+            renderOpportunities();
+            lucide.createIcons();
+        });
+
+        /**
+         * Load opportunities from localStorage or fall back to DEFAULT_OPPORTUNITIES
+         */
+        function loadOpportunitiesFromStorage() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY_OPPS);
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        opportunities = parsed;
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to parse stored opportunities:", err);
+            }
+            opportunities = [...DEFAULT_OPPORTUNITIES];
+            saveOpportunitiesToStorage();
+        }
+
+        function saveOpportunitiesToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY_OPPS, JSON.stringify(opportunities));
+            } catch (err) {
+                showToast("Warning: Could not save to browser storage.", "error");
+            }
+        }
+
+        /**
+         * Check if URL contains ?opp=ID (for direct WhatsApp / student sharing)
+         */
+        function checkUrlQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            const oppParam = params.get("opp");
+            if (oppParam) {
+                const exists = opportunities.some(o => o.id === oppParam);
+                if (exists) {
+                    sharedOppId = oppParam;
+                    document.getElementById("sharedHighlightBanner").classList.remove("hidden");
+                }
+            }
+        }
+
+        function clearSharedFilter() {
+            sharedOppId = null;
+            document.getElementById("sharedHighlightBanner").classList.add("hidden");
+            // Clean URL query string without reloading
+            const url = new URL(window.location);
+            url.searchParams.delete("opp");
+            window.history.replaceState({}, "", url);
+            renderOpportunities();
+        }
+
+        /**
+         * Calculate Deadline Status Badge
+         */
+        function getDeadlineStatus(deadlineStr) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const [year, month, day] = deadlineStr.split("-").map(Number);
+            const deadlineDate = new Date(year, month - 1, day);
+            deadlineDate.setHours(23, 59, 59, 999);
+
+            const diffTime = deadlineDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            const formattedDate = deadlineDate.toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+                year: "numeric"
+            });
+
+            if (diffDays < 0) {
+                return {
+                    status: "closed",
+                    label: "Closed",
+                    formattedDate,
+                    daysLeft: diffDays,
+                    badgeClass: "bg-slate-200 text-slate-600 border-slate-300",
+                    icon: "x-circle"
+                };
+            } else if (diffDays <= 14) {
+                const dayText = diffDays === 0 ? "Closes Today!" : diffDays === 1 ? "1 day left" : `${diffDays} days left`;
+                return {
+                    status: "closing-soon",
+                    label: `Closing Soon (${dayText})`,
+                    formattedDate,
+                    daysLeft: diffDays,
+                    badgeClass: "bg-amber-100 text-amber-900 border-amber-300 animate-pulse-subtle",
+                    icon: "clock"
+                };
+            } else {
+                return {
+                    status: "open",
+                    label: "Open",
+                    formattedDate,
+                    daysLeft: diffDays,
+                    badgeClass: "bg-emerald-50 text-emerald-800 border-emerald-200",
+                    icon: "check-circle-2"
+                };
+            }
+        }
+
+        /**
+         * Category Badge Styling Helper
+         */
+        function getCategoryStyle(category) {
+            switch (category) {
+                case "Graduate Programs & Scholarships":
+                    return "bg-indigo-50 text-indigo-800 border-indigo-200";
+                case "Internships & Attachments":
+                    return "bg-sky-50 text-sky-800 border-sky-200";
+                case "Research & Fellowships":
+                    return "bg-purple-50 text-purple-800 border-purple-200";
+                case "Conferences & Workshops":
+                    return "bg-teal-50 text-teal-800 border-teal-200";
+                default:
+                    return "bg-slate-100 text-slate-700 border-slate-200";
+            }
+        }
+
+        /**
+         * Filter & Render Opportunities Grid
+         */
+        function renderOpportunities() {
+            const grid = document.getElementById("opportunitiesGrid");
+            const emptyState = document.getElementById("emptyState");
+            const searchQuery = document.getElementById("searchInput").value.trim().toLowerCase();
+            const eligibilityFilter = document.getElementById("eligibilityFilter").value;
+            const hideClosed = document.getElementById("hideClosedCheckbox").checked;
+
+            // Toggle clear search button
+            const clearBtn = document.getElementById("clearSearchBtn");
+            if (searchQuery.length > 0) {
+                clearBtn.classList.remove("hidden");
+            } else {
+                clearBtn.classList.add("hidden");
+            }
+
+            // Filter logic
+            let filtered = opportunities.filter(opp => {
+                // If viewing a shared link specifically
+                if (sharedOppId && opp.id !== sharedOppId) return false;
+
+                // Category filter
+                if (activeCategory !== "All" && opp.category !== activeCategory) return false;
+
+                // Eligibility filter
+                if (eligibilityFilter !== "All" && (!opp.eligibility || !opp.eligibility.includes(eligibilityFilter))) {
+                    return false;
+                }
+
+                // Closed filter
+                const deadlineInfo = getDeadlineStatus(opp.deadline);
+                if (hideClosed && deadlineInfo.status === "closed") return false;
+
+                // Search query filter
+                if (searchQuery) {
+                    const haystack = `${opp.title} ${opp.host} ${opp.description} ${opp.category} ${(opp.eligibility || []).join(" ")}`.toLowerCase();
+                    if (!haystack.includes(searchQuery)) return false;
+                }
+
+                return true;
+            });
+
+            // Sort: Open / Closing Soon first (sorted by nearest deadline), Closed at bottom
+            filtered.sort((a, b) => {
+                const statA = getDeadlineStatus(a.deadline);
+                const statB = getDeadlineStatus(b.deadline);
+                if (statA.status === "closed" && statB.status !== "closed") return 1;
+                if (statA.status !== "closed" && statB.status === "closed") return -1;
+                return new Date(a.deadline) - new Date(b.deadline);
+            });
+
+            // Update counter
+            const openCount = opportunities.filter(o => getDeadlineStatus(o.deadline).status !== "closed").length;
+            document.getElementById("statsCounter").textContent = `${filtered.length} shown (${openCount} active)`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = "";
+                emptyState.classList.remove("hidden");
+                lucide.createIcons();
+                return;
+            }
+
+            emptyState.classList.add("hidden");
+
+            grid.innerHTML = filtered.map(opp => {
+                const deadlineInfo = getDeadlineStatus(opp.deadline);
+                const isClosed = deadlineInfo.status === "closed";
+                const catStyle = getCategoryStyle(opp.category);
+
+                const eligibilityBadges = (opp.eligibility || []).map(el => `
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-700 border border-slate-200/80">
+                        ${escapeHTML(el)}
+                    </span>
+                `).join("");
+
+                const adminActionBar = isAdminAuthenticated ? `
+                    <div class="flex items-center gap-1.5 pt-3 mt-3 border-t border-dashed border-slate-200">
+                        <span class="text-[11px] font-semibold uppercase tracking-wider text-gold-600 mr-auto flex items-center gap-1">
+                            <i data-lucide="shield" class="w-3 h-3"></i> Admin
+                        </span>
+                        <button onclick="openPostModal('${opp.id}')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">
+                            <i data-lucide="pencil" class="w-3.5 h-3.5"></i> Edit
+                        </button>
+                        <button onclick="confirmDeleteOpportunity('${opp.id}')" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-red-50 hover:bg-red-100 text-red-700 transition-colors">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete
+                        </button>
+                    </div>
+                ` : "";
+
+                return `
+                    <article class="bg-white rounded-2xl border ${isClosed ? 'border-slate-200 opacity-80' : 'border-slate-200/90 hover:border-navy-800/40'} shadow-sm hover:shadow-md transition-all flex flex-col justify-between p-5 relative overflow-hidden">
+                        <!-- Top Accent Line -->
+                        <div class="absolute top-0 left-0 right-0 h-1 ${isClosed ? 'bg-slate-300' : deadlineInfo.status === 'closing-soon' ? 'bg-gold-500' : 'bg-navy-900'}"></div>
+
+                        <div>
+                            <!-- Category & Status Row -->
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pt-1">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold border ${catStyle}">
+                                    ${escapeHTML(opp.category)}
+                                </span>
+                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${deadlineInfo.badgeClass}">
+                                    <i data-lucide="${deadlineInfo.icon}" class="w-3.5 h-3.5"></i>
+                                    ${deadlineInfo.label}
+                                </span>
+                            </div>
+
+                            <!-- Title -->
+                            <h2 class="text-base sm:text-lg font-bold text-slate-900 leading-snug mb-2">
+                                ${escapeHTML(opp.title)}
+                            </h2>
+
+                            <!-- Host Institution -->
+                            <div class="flex items-start gap-2 text-xs sm:text-sm text-slate-600 font-medium mb-3">
+                                <i data-lucide="building-2" class="w-4 h-4 text-navy-800 shrink-0 mt-0.5"></i>
+                                <span>${escapeHTML(opp.host)}</span>
+                            </div>
+
+                            <!-- Deadline Date & Eligibility -->
+                            <div class="bg-slate-50 rounded-xl p-3 mb-3.5 border border-slate-100 space-y-2">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-slate-500 flex items-center gap-1.5">
+                                        <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        Deadline:
+                                    </span>
+                                    <span class="font-semibold ${isClosed ? 'text-slate-500 line-through' : 'text-slate-800'}">
+                                        ${deadlineInfo.formattedDate}
+                                    </span>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-1.5 pt-1 border-t border-slate-200/60">
+                                    <span class="text-[11px] text-slate-500 mr-1">Eligibility:</span>
+                                    ${eligibilityBadges}
+                                </div>
+                            </div>
+
+                            <!-- Description -->
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                                ${escapeHTML(opp.description)}
+                            </p>
+                        </div>
+
+                        <!-- Bottom Actions -->
+                        <div>
+                            <div class="flex items-center gap-2 pt-2">
+                                <a href="${escapeHTML(opp.url)}" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${isClosed ? 'bg-slate-200 text-slate-600 hover:bg-slate-300' : 'bg-navy-900 hover:bg-navy-800 text-white shadow-sm'}">
+                                    <span>${isClosed ? 'View Details (Closed)' : 'Apply / Details'}</span>
+                                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                </a>
+
+                                <!-- WhatsApp & Link Share Button -->
+                                <button onclick="shareOpportunity('${opp.id}')" class="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 transition-colors" title="Copy WhatsApp message & shareable link">
+                                    <i data-lucide="share-2" class="w-4 h-4"></i>
+                                    <span class="hidden sm:inline">Share</span>
+                                </button>
+                            </div>
+                            ${adminActionBar}
+                        </div>
+                    </article>
+                `;
+            }).join("");
+
+            lucide.createIcons();
+        }
+
+        /**
+         * Category Tab Switching
+         */
+        function setCategory(category) {
+            activeCategory = category;
+            document.querySelectorAll(".cat-tab").forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.className = "cat-tab active px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all bg-navy-900 text-white shadow-sm";
+                } else {
+                    btn.className = "cat-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-all bg-slate-100 text-slate-700 hover:bg-slate-200";
+                }
+            });
+            renderOpportunities();
+        }
+
+        function clearSearch() {
+            document.getElementById("searchInput").value = "";
+            renderOpportunities();
+        }
+
+        function resetAllFilters() {
+            document.getElementById("searchInput").value = "";
+            document.getElementById("eligibilityFilter").value = "All";
+            document.getElementById("hideClosedCheckbox").checked = false;
+            clearSharedFilter();
+            setCategory("All");
+        }
+
+        /**
+         * WhatsApp / Clipboard Share Feature
+         */
+        function shareOpportunity(id) {
+            const opp = opportunities.find(o => o.id === id);
+            if (!opp) return;
+
+            const deadlineInfo = getDeadlineStatus(opp.deadline);
+            const shareUrl = new URL(window.location.href);
+            shareUrl.searchParams.set("opp", opp.id);
+
+            const whatsappText = `*Makerere Physics Opportunities Board*\n\n📌 *${opp.title}*\n🏛️ Host: ${opp.host}\n🎓 Eligibility: ${(opp.eligibility || []).join(", ")}\n⏳ Deadline: ${deadlineInfo.formattedDate}\n\n🔗 Details & Apply: ${opp.url}\n📋 View on Dept Board: ${shareUrl.toString()}`;
+
+            copyTextToClipboard(whatsappText);
+            showToast("Copied formatted WhatsApp & link snippet to clipboard!", "success");
+        }
+
+        /**
+         * Cross-browser / iFrame-safe Clipboard Copy
+         */
+        function copyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand("copy");
+            } catch (err) {
+                console.error("Clipboard copy failed:", err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        /**
+         * =====================================================================
+         * LECTURER ADMIN MODE AUTHENTICATION
+         * =====================================================================
+         */
+        function getStoredPin() {
+            return localStorage.getItem(STORAGE_KEY_PIN) || DEFAULT_PIN;
+        }
+
+        function handleAdminButtonClick() {
+            if (isAdminAuthenticated) {
+                openPostModal();
+            } else {
+                document.getElementById("pinInput").value = "";
+                document.getElementById("pinErrorMsg").classList.add("hidden");
+                document.getElementById("pinModal").classList.remove("hidden");
+                setTimeout(() => document.getElementById("pinInput").focus(), 100);
+            }
+        }
+
+        function closePinModal() {
+            document.getElementById("pinModal").classList.add("hidden");
+        }
+
+        function verifyAdminPin(event) {
+            event.preventDefault();
+            const enteredPin = document.getElementById("pinInput").value.trim();
+            if (enteredPin === getStoredPin()) {
+                isAdminAuthenticated = true;
+                closePinModal();
+                updateAdminUI();
+                renderOpportunities();
+                showToast("Lecturer Admin Mode unlocked.", "success");
+            } else {
+                document.getElementById("pinErrorMsg").classList.remove("hidden");
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminAuthenticated = false;
+            updateAdminUI();
+            renderOpportunities();
+            showToast("Exited Lecturer Admin Mode.", "info");
+        }
+
+        function updateAdminUI() {
+            const toggleBtn = document.getElementById("adminToggleBtn");
+            const adminControls = document.getElementById("adminControls");
+            const changePinSection = document.getElementById("changePinSection");
+
+            if (isAdminAuthenticated) {
+                toggleBtn.classList.add("hidden");
+                adminControls.classList.remove("hidden");
+                changePinSection.classList.remove("hidden");
+            } else {
+                toggleBtn.classList.remove("hidden");
+                adminControls.classList.add("hidden");
+                changePinSection.classList.add("hidden");
+            }
+            lucide.createIcons();
+        }
+
+        function updateAdminPin() {
+            const newPin = document.getElementById("newPinInput").value.trim();
+            if (newPin.length < 4) {
+                showToast("PIN must be at least 4 characters.", "error");
+                return;
+            }
+            localStorage.setItem(STORAGE_KEY_PIN, newPin);
+            document.getElementById("newPinInput").value = "";
+            showToast("Lecturer Admin PIN updated successfully.", "success");
+        }
+
+        /**
+         * =====================================================================
+         * CREATE / EDIT / DELETE OPPORTUNITIES
+         * =====================================================================
+         */
+        function openPostModal(editId = null) {
+            if (!isAdminAuthenticated) return;
+
+            const form = document.getElementById("opportunityForm");
+            form.reset();
+
+            if (editId) {
+                const opp = opportunities.find(o => o.id === editId);
+                if (!opp) return;
+
+                document.getElementById("postModalTitle").textContent = "Edit Opportunity";
+                document.getElementById("oppId").value = opp.id;
+                document.getElementById("oppTitle").value = opp.title;
+                document.getElementById("oppCategory").value = opp.category;
+                document.getElementById("oppDeadline").value = opp.deadline;
+                document.getElementById("oppHost").value = opp.host;
+                document.getElementById("oppDescription").value = opp.description;
+                document.getElementById("oppUrl").value = opp.url;
+
+                document.querySelectorAll('input[name="oppEligibility"]').forEach(cb => {
+                    cb.checked = (opp.eligibility || []).includes(cb.value);
+                });
+            } else {
+                document.getElementById("postModalTitle").textContent = "Post New Opportunity";
+                document.getElementById("oppId").value = "";
+                // Default deadline 3 weeks from today
+                document.getElementById("oppDeadline").value = getRelativeDateISO(21);
+                // Default check BSc Physics & MSc
+                document.querySelectorAll('input[name="oppEligibility"]').forEach(cb => {
+                    cb.checked = (cb.value === "BSc Physics" || cb.value === "MSc");
+                });
+            }
+
+            document.getElementById("postModal").classList.remove("hidden");
+        }
+
+        function closePostModal() {
+            document.getElementById("postModal").classList.add("hidden");
+        }
+
+        function saveOpportunity(event) {
+            event.preventDefault();
+            if (!isAdminAuthenticated) return;
+
+            const id = document.getElementById("oppId").value;
+            const title = document.getElementById("oppTitle").value.trim();
+            const category = document.getElementById("oppCategory").value;
+            const deadline = document.getElementById("oppDeadline").value;
+            const host = document.getElementById("oppHost").value.trim();
+            const description = document.getElementById("oppDescription").value.trim();
+            const url = document.getElementById("oppUrl").value.trim();
+
+            const eligibility = Array.from(document.querySelectorAll('input[name="oppEligibility"]:checked'))
+                .map(cb => cb.value);
+
+            if (eligibility.length === 0) {
+                showToast("Please select at least one eligibility group.", "error");
+                return;
+            }
+
+            if (id) {
+                // Update existing
+                const idx = opportunities.findIndex(o => o.id === id);
+                if (idx !== -1) {
+                    opportunities[idx] = { id, title, category, deadline, host, eligibility, description, url };
+                    showToast("Opportunity updated successfully.", "success");
+                }
+            } else {
+                // Create new
+                const newOpp = {
+                    id: "mak-phys-" + Date.now().toString(36),
+                    title,
+                    category,
+                    deadline,
+                    host,
+                    eligibility,
+                    description,
+                    url
+                };
+                opportunities.unshift(newOpp);
+                showToast("New opportunity published to the board!", "success");
+            }
+
+            saveOpportunitiesToStorage();
+            closePostModal();
+            renderOpportunities();
+        }
+
+        function confirmDeleteOpportunity(id) {
+            const opp = opportunities.find(o => o.id === id);
+            if (!opp) return;
+
+            openConfirmModal(
+                "Delete Opportunity?",
+                `Are you sure you want to remove "${opp.title}" from the board?`,
+                () => {
+                    opportunities = opportunities.filter(o => o.id !== id);
+                    saveOpportunitiesToStorage();
+                    renderOpportunities();
+                    showToast("Opportunity deleted.", "info");
+                }
+            );
+        }
+
+        function resetToSampleData() {
+            openConfirmModal(
+                "Restore Default Sample Posts?",
+                "This will replace your current browser posts with the original Makerere Physics sample entries.",
+                () => {
+                    opportunities = [...DEFAULT_OPPORTUNITIES];
+                    saveOpportunitiesToStorage();
+                    clearSharedFilter();
+                    renderOpportunities();
+                    showToast("Sample opportunities restored.", "success");
+                }
+            );
+        }
+
+        /**
+         * =====================================================================
+         * JSON EXPORT / IMPORT FOR STATIC HOSTING (GitHub Pages / Netlify)
+         * =====================================================================
+         */
+        function openDataModal() {
+            document.getElementById("jsonExportArea").value = JSON.stringify(opportunities, null, 2);
+            document.getElementById("jsonImportArea").value = "";
+            document.getElementById("dataModal").classList.remove("hidden");
+        }
+
+        function closeDataModal() {
+            document.getElementById("dataModal").classList.add("hidden");
+        }
+
+        function copyJsonToClipboard() {
+            const jsonText = document.getElementById("jsonExportArea").value;
+            copyTextToClipboard(jsonText);
+            showToast("JSON copied to clipboard!", "success");
+        }
+
+        function downloadJsonFile() {
+            const jsonText = document.getElementById("jsonExportArea").value;
+            const blob = new Blob([jsonText], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `mak-physics-opportunities-${new Date().toISOString().split("T")[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("Downloaded JSON backup file.", "success");
+        }
+
+        function handleJsonFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById("jsonImportArea").value = e.target.result;
+                showToast("File loaded. Click 'Apply Imported JSON' to update board.", "info");
+            };
+            reader.readAsText(file);
+        }
+
+        function importJsonData() {
+            const raw = document.getElementById("jsonImportArea").value.trim();
+            if (!raw) {
+                showToast("Paste valid JSON data or upload a .json file first.", "error");
+                return;
+            }
+            try {
+                const parsed = JSON.parse(raw);
+                if (!Array.isArray(parsed)) {
+                    throw new Error("JSON root must be an array of opportunities.");
+                }
+                // Basic schema validation
+                const valid = parsed.every(item => item.title && item.category && item.deadline && item.host && item.url);
+                if (!valid) {
+                    throw new Error("One or more items are missing required fields (title, category, deadline, host, url).");
+                }
+                opportunities = parsed;
+                saveOpportunitiesToStorage();
+                renderOpportunities();
+                closeDataModal();
+                showToast(`Imported ${parsed.length} opportunities successfully!`, "success");
+            } catch (err) {
+                showToast(`Invalid JSON: ${err.message}`, "error");
+            }
+        }
+
+        /**
+         * =====================================================================
+         * CUSTOM CONFIRMATION DIALOG & TOAST SYSTEM
+         * =====================================================================
+         */
+        function openConfirmModal(title, message, onConfirm) {
+            document.getElementById("confirmTitle").textContent = title;
+            document.getElementById("confirmMessage").textContent = message;
+            pendingConfirmCallback = onConfirm;
+            document.getElementById("confirmModal").classList.remove("hidden");
+        }
+
+        function closeConfirmModal() {
+            document.getElementById("confirmModal").classList.add("hidden");
+            pendingConfirmCallback = null;
+        }
+
+        document.getElementById("confirmActionBtn").addEventListener("click", () => {
+            if (typeof pendingConfirmCallback === "function") {
+                pendingConfirmCallback();
+            }
+            closeConfirmModal();
+        });
+
+        function showToast(message, type = "info") {
+            const container = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+
+            const styles = {
+                success: "bg-navy-900 text-white border-l-4 border-emerald-400",
+                error: "bg-red-950 text-white border-l-4 border-red-400",
+                info: "bg-slate-800 text-white border-l-4 border-gold-400"
+            };
+
+            toast.className = `${styles[type] || styles.info} px-4 py-3 rounded-xl shadow-xl text-xs sm:text-sm font-medium flex items-center justify-between gap-3 pointer-events-auto transition-all transform translate-y-0 opacity-100`;
+            toast.innerHTML = `<span>${escapeHTML(message)}</span>`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add("opacity-0", "translate-y-2");
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        /**
+         * HTML Escaping to prevent XSS from pasted descriptions/URLs
+         */
+        function escapeHTML(str) {
+            if (typeof str !== "string") return "";
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
